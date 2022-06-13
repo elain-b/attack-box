@@ -9,11 +9,10 @@
  *  Morph normals / blend shape normals
  *
  * FBX format references:
- * 	https://wiki.blender.org/index.php/User:Mont29/Foundation/FBX_File_Structure
- * 	http://help.autodesk.com/view/FBX/2017/ENU/?guid=__cpp_ref_index_html (C++ SDK reference)
+ * 	https://help.autodesk.com/view/FBX/2017/ENU/?guid=__cpp_ref_index_html (C++ SDK reference)
  *
- * 	Binary format specification:
- *		https://code.blender.org/2013/08/fbx-binary-file-format-specification/
+ * Binary format specification:
+ *	https://code.blender.org/2013/08/fbx-binary-file-format-specification/
  */
 
 	let fbxTree;
@@ -324,6 +323,14 @@
 				const values = textureNode.Scaling.value;
 				texture.repeat.x = values[ 0 ];
 				texture.repeat.y = values[ 1 ];
+
+			}
+
+			if ( 'Translation' in textureNode ) {
+
+				const values = textureNode.Translation.value;
+				texture.offset.x = values[ 0 ];
+				texture.offset.y = values[ 1 ];
 
 			}
 
