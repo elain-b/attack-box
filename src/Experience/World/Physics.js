@@ -21,6 +21,7 @@ export default class Physics
         // this.setModels()
         // this.setMaterials()
         this.setFloor()
+        this.setObjects()
         this.setBox()
 
         this.time.on('tick', () =>
@@ -58,6 +59,34 @@ export default class Physics
         this.floor.body.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), - Math.PI * 0.5)
 
         this.world.addBody(this.floor.body)
+    }
+
+    setObjects()
+    {
+        this.objects = {}
+
+        /**
+         * Create method
+         */
+        this.objects.shape = new CANNON.Box(new CANNON.Vec3(2 * 0.5, 2 * 0.5, 2 * 0.5))
+            
+        this.objects.body = new CANNON.Body({ mass: 1 })
+        this.objects.body.position.set(3, 1, 0)
+        this.objects.body.addShape(this.objects.shape)
+        // material: defaultMaterial
+        this.world.addBody(this.objects.body)
+
+         /**
+         * Sound
+         */
+        // this.car.chassis.body.addEventListener('collide', (_event) =>
+        // {
+        //     if(_event.body.mass === 0)
+        //     {
+        //         const relativeVelocity = _event.contact.getImpactVelocityAlongNormal()
+        //         this.sounds.play('carHit', relativeVelocity)
+        //     }
+        // })
     }
 
     setBox()
@@ -109,7 +138,7 @@ export default class Physics
 
     update()
     {
-        if(this.box)
-            this.box.update()
+        // if(this.box)
+        //     this.box.update()
     }
 }

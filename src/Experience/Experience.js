@@ -61,7 +61,7 @@ export default class Experience
     update()
     {
         this.camera.update()
-        // this.physics.update()
+        this.physics.update()
         this.world.update()
         this.renderer.update()
     }

@@ -2,6 +2,8 @@ import Experience from "../Experience.js"
 import Environment from './Environment.js'
 import Floor from './Floor.js'
 import Me from './Me.js'
+import Controls from './Controls.js'
+import Objects from './Objects.js'
 
 export default class World
 {
@@ -18,6 +20,8 @@ export default class World
             this.floor = new Floor()
             this.me = new Me()
             this.environment = new Environment()
+            this.controls = new Controls()
+            this.objects = new Objects()
         })
     }
 
@@ -25,5 +29,7 @@ export default class World
     {
         if(this.me)
             this.me.update()
+        if(this.objects)
+            this.objects.update()
     }
 }

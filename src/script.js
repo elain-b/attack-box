@@ -108,6 +108,7 @@ const experience = new Experience(document.querySelector('canvas.webgl'))
 // ])
 
 // const bakedTexture = textureLoader.load('/models/baked1.jpg')
+// console.log(bakedTexture)
 // bakedTexture.flipY = false
 // bakedTexture.encoding = THREE.sRGBEncoding
 
@@ -385,6 +386,7 @@ const experience = new Experience(document.querySelector('canvas.webgl'))
 //     })
 //     bakedMesh.material = bakedMaterial1
 //     scene.add(model)
+    
 
 //     // body.addEventListener('collide', playHitSound)
 //     world.addBody(body)
