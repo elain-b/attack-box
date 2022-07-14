@@ -197,8 +197,13 @@ export default class Me
             directionOffset = Math.PI / 2
         }
 
+        // calculate towards camera direction
+        var angleYCharactorDirection = Math.atan2(
+            (this.me.model.position.z - this.experience.camera.instance.position.z),
+            (this.me.model.position.x - this.experience.camera.instance.position.x))
+        console.log(angleYCharactorDirection * 180 / Math.PI)
         // rotate model and body
-        this.rotateQuarternion.setFromAxisAngle(this.rotateAngle, directionOffset)
+        this.rotateQuarternion.setFromAxisAngle(this.rotateAngle, angleYCharactorDirection + directionOffset)
         this.me.model.quaternion.rotateTowards(this.rotateQuarternion, 0.1)
         this.physics.box.body.quaternion.copy(this.me.model.quaternion)
 
@@ -210,8 +215,8 @@ export default class Me
         // this.walkDirection.applyAxisAngle(this.rotateAngle, this.walkDirectionAngle)
         
         // move model & camera
-        const moveX = amountMove * Math.cos(directionOffset)
-        const moveZ = amountMove * Math.sin(directionOffset)
+        const moveX = amountMove * Math.cos(angleYCharactorDirection + directionOffset)
+        const moveZ = amountMove * Math.sin(angleYCharactorDirection + directionOffset)
         // const moveX = this.walkDirection.x * amountMove
         // const moveZ = this.walkDirection.z * amountMove
         targetPoint.x += moveX
