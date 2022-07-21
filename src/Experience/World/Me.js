@@ -1,3 +1,4 @@
+import { Vec3 } from 'cannon'
 import * as THREE from 'three'
 import Experience from "../Experience.js"
 import World from './World.js'
@@ -201,34 +202,35 @@ export default class Me
         var angleYCharactorDirection = Math.atan2(
             (this.me.model.position.z - this.experience.camera.instance.position.z),
             (this.me.model.position.x - this.experience.camera.instance.position.x))
-        console.log(angleYCharactorDirection * 180 / Math.PI)
+        
         // rotate model and body
         this.rotateQuarternion.setFromAxisAngle(this.rotateAngle, angleYCharactorDirection + directionOffset)
         this.me.model.quaternion.rotateTowards(this.rotateQuarternion, 0.1)
         this.physics.box.body.quaternion.copy(this.me.model.quaternion)
-
-        // calculate direction
-        // this.camera.getWorldDirection(this.walkDirection)
-        // this.walkDirection.y = 0
-        // this.walkDirection.normalize()
-        // this.walkDirectionAngle += directionOffset
-        // this.walkDirection.applyAxisAngle(this.rotateAngle, this.walkDirectionAngle)
         
         // move model & camera
-        const moveX = amountMove * Math.cos(angleYCharactorDirection + directionOffset)
-        const moveZ = amountMove * Math.sin(angleYCharactorDirection + directionOffset)
-        // const moveX = this.walkDirection.x * amountMove
-        // const moveZ = this.walkDirection.z * amountMove
+        const moveVecX = Math.cos(angleYCharactorDirection + directionOffset)
+        const moveVecZ = Math.sin(angleYCharactorDirection + directionOffset)
+        const moveX = amountMove * moveVecX
+        const moveZ = amountMove * moveVecZ
         targetPoint.x += moveX
         targetPoint.z += moveZ
 
         tooClose = this.collisionDetect(obj.geometry.attributes.position, this.me.model, targetPoint)
 
+        // 衝突してない時
         if (!tooClose)
         {
             this.physics.box.body.position.copy(targetPoint)
             this.me.model.position.copy(targetPoint)
             this.updateCameraTarget(moveX, moveZ)
+        }
+        else
+        {
+            // const velocityValue = 5
+            // const velocityX = velocityValue * moveVecX
+            // const velocityZ = velocityValue * moveVecZ
+            // this.physics.box.body.velocity.set(velocityX, 20, velocityZ)
         }
     }
 
@@ -243,32 +245,6 @@ export default class Me
         this.cameraTarget.z = this.me.model.position.z
         this.camera.controls.target = this.cameraTarget
     }
-
-    // directionOffset() {
-    //     var directionOffset = 0 // w
-
-    //     if (this.world.controls.move.w) {
-    //         if (this.world.controls.move.a) {
-    //             directionOffset = Math.PI / 4 // w+a
-    //         } else if (this.world.controls.move.d) {
-    //             directionOffset = - Math.PI / 4 // w+d
-    //         }
-    //     } else if (this.world.controls.move.s) {
-    //         if (this.world.controls.move.a) {
-    //             directionOffset = Math.PI / 4 + Math.PI / 2 // s+a
-    //         } else if (this.world.controls.move.d) {
-    //             directionOffset = -Math.PI / 4 - Math.PI / 2 // s+d
-    //         } else {
-    //             directionOffset = Math.PI // s
-    //         }
-    //     } else if (this.world.controls.move.a) {
-    //         directionOffset = Math.PI / 2 // a
-    //     } else if (this.world.controls.move.d) {
-    //         directionOffset = - Math.PI / 2 // d
-    //     }
-
-    //     return directionOffset
-    // }
 
     collisionDetect(childPosition, model, targetPoint)
     {

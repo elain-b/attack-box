@@ -23,6 +23,7 @@ export default class Physics
         this.setFloor()
         this.setObjects()
         this.setBox()
+        this.setPlane()
 
         this.time.on('tick', () =>
         {
@@ -99,9 +100,11 @@ export default class Physics
         this.box.shape = new CANNON.Box(new CANNON.Vec3(0.5 * 0.5, 0.5 * 0.5, 0.5 * 0.5))
             
         this.box.body = new CANNON.Body({ mass: 1 })
-        this.box.body.position.set(0, 4.25, 0)
+        this.box.body.position.set(0, 0.25, 0)
         this.box.body.addShape(this.box.shape)
         // material: defaultMaterial
+        // this.box.body.velocity.set(0, 0, 6)
+        // this.physics.box.body.velocity.set(0, 0, 6)
         this.world.addBody(this.box.body)
 
          /**
@@ -132,8 +135,21 @@ export default class Physics
         {
             this.box.destroy()
             this.box.create()
-            // this.car.chassis.body.wakeUp()
         }
+    }
+
+    // 斜面
+    setPlane()
+    {
+        this.plane = {}
+        this.plane.shape = new CANNON.Box(new CANNON.Vec3(0.5 * 0.5, 0.05 * 0.5, 0.5 * 0.5))
+            
+        this.plane.body = new CANNON.Body({ mass: 0 })
+        this.plane.body.position.set(0, 0.025, 2)
+        this.plane.body.addShape(this.plane.shape)
+        // material: defaultMaterial
+        this.plane.body.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), - Math.PI / 8)
+        this.world.addBody(this.plane.body)
     }
 
     update()

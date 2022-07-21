@@ -13,15 +13,17 @@ export default class Objects
         this.physics = this.experience.physics
         this.debug = this.experience.debug
 
+        this.collidableMeshList = []
+
         // this.setParsers()
         // this.setMerge()
         this.setBox3()
+        this.setPlane()
 
     }
 
     setBox3()
     {
-        this.collidableMeshList = []
         this.model = this.resources.items.baked.scene
         this.scene.add(this.model)
         this.collidableMeshList.push(this.model)
@@ -36,13 +38,34 @@ export default class Objects
         })
     }
 
+    // 斜面
+    setPlane()
+    {
+        this.planemodel = this.resources.items.plane.scene
+        this.scene.add(this.planemodel)
+        this.collidableMeshList.push(this.planemodel)
+
+        this.planemodel.traverse((child) =>
+        {
+            if(child instanceof THREE.Mesh)
+            {
+                child.castShadow = true
+                child.position.set(0, 0, 0)
+            }
+        })
+    }
+
     update()
     {
         /**
          * Body
          */
-        // Update me model
+        // Update box3 model
         this.model.position.copy(this.physics.objects.body.position)
         this.model.quaternion.copy(this.physics.objects.body.quaternion)
+
+        // Update plane model
+        this.planemodel.position.copy(this.physics.plane.body.position)
+        this.planemodel.quaternion.copy(this.physics.plane.body.quaternion)
     }
 }

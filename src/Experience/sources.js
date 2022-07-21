@@ -46,5 +46,10 @@ export default [
         name: 'baked',
         type: 'gltfModel',
         path: '/models/box3.glb'
+    },
+    {
+        name: 'plane',
+        type: 'gltfModel',
+        path: '/models/plane.glb'
     }
 ]
