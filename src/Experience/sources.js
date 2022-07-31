@@ -28,6 +28,11 @@ export default [
     //     path: 'models/Fox/glTF/Fox.gltf'
     // },
     {
+        name: 'bakedTexture2',
+        type: 'texture',
+        path: '/models/baked2.jpg'
+    },
+    {
         name: 'bakedTexture',
         type: 'texture',
         path: '/models/baked1.jpg'
@@ -36,6 +41,11 @@ export default [
         name: 'bakedTexture1',
         type: 'texture',
         path: '/models/baked.jpg'
+    },
+    {
+        name: 'bone',
+        type: 'gltfModel',
+        path: '/models/bear.glb'
     },
     {
         name: 'box2',

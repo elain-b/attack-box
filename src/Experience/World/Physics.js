@@ -97,10 +97,10 @@ export default class Physics
         /**
          * Create method
          */
-        this.box.shape = new CANNON.Box(new CANNON.Vec3(0.5 * 0.5, 0.5 * 0.5, 0.5 * 0.5))
+        this.box.shape = new CANNON.Box(new CANNON.Vec3(0.5 * 0.5, 0 * 0.5, 0.5 * 0.5))
             
         this.box.body = new CANNON.Body({ mass: 1 })
-        this.box.body.position.set(0, 0.25, 0)
+        this.box.body.position.set(0, 0, 0)
         this.box.body.addShape(this.box.shape)
         // material: defaultMaterial
         // this.box.body.velocity.set(0, 0, 6)

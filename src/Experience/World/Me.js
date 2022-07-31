@@ -35,7 +35,8 @@ export default class Me
         // }
 
         // Setup
-        this.resource = this.resources.items.box2
+        // this.resource = this.resources.items.box2
+        this.resource = this.resources.items.bone
 
         this.setModel()
         this.setAnimation()
@@ -45,20 +46,37 @@ export default class Me
     {
         this.me = {}
 
-        this.me.material = this.resources.items.bakedTexture
-        this.me.material.flipY = false
+        // this.me.material = new THREE.MeshToonMaterial({ color: 0x382a0c })
+        this.me.material = new THREE.MeshBasicMaterial({ map: this.resources.items.bakedTexture2 })
+        // this.me.material = this.resources.items.bakedTexture2
+        // this.me.material.flipY = false
         this.me.material.encoding = THREE.sRGBEncoding
+        // console.log(this.me.material)
 
-        this.me.model = this.resources.items.box2.scene
+        // this.me.model = this.resources.items.box2.scene
+        this.me.model = this.resources.items.bone.scene
         this.me.model.position.set(0, 0, 0)
-        this.me.object = this.resources.items.box2.scene.children[0]
+        // this.me.object = this.resources.items.box2.scene.children[0]
+        this.me.object = this.resources.items.bone.scene.children[0]
         for(const _child of this.me.object.children)
         {
-            _child.material = this.me.material
+            // if (_child.name === "bear")
+            // {
+            //     _child.material = this.me.material
+            //     // _child.material.flipY = false
+            // }
+
+            if (_child instanceof THREE.Mesh)
+            {
+                _child.material = this.me.material
+                _child.material.map.flipY = false
+            }
+
+            // _child.material = this.me.material
             _child.castShadow = true
             _child.position.set(0, 0, 0)
         }
-        // this.me.object.material = this.me.material
+        // this.me.model.material = this.me.material
         this.scene.add(this.me.model)
 
         // this.walkDirection.set(1, 0, 0)
@@ -91,12 +109,11 @@ export default class Me
         this.animation.actions = {}
 
         this.animation.actions.idle = this.animation.mixer.clipAction(this.resource.animations[0])
-        this.animation.actions.walking = this.animation.mixer.clipAction(this.resource.animations[3])
+        this.animation.actions.walking = this.animation.mixer.clipAction(this.resource.animations[2])
         this.animation.actions.running = this.animation.mixer.clipAction(this.resource.animations[1])
 
         this.animation.actions.current = this.animation.actions.idle
         this.animation.actions.current.play()
-        // console.log(this.animation.actions.idle)
 
         // this.animation.play = (name) =>
         // {
@@ -150,10 +167,10 @@ export default class Me
 
         if (directionPressed && this.world.controls.toggleRun) {
             play = 'running'
-            amountMove = 0.1
+            amountMove = 0.01
         } else if (directionPressed) {
             play = 'walking'
-            amountMove = 0.05
+            amountMove = 0.008
         } else {
             play = 'idle'
         }
@@ -216,7 +233,8 @@ export default class Me
         targetPoint.x += moveX
         targetPoint.z += moveZ
 
-        tooClose = this.collisionDetect(obj.geometry.attributes.position, this.me.model, targetPoint)
+        // tooClose = this.collisionDetect(obj.geometry.attributes.position, this.me.model, targetPoint)
+        tooClose = this.collisionDetect(obj.children[1].geometry.attributes.position, this.me.model, targetPoint)
 
         // 衝突してない時
         if (!tooClose)
