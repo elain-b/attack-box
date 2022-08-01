@@ -18,7 +18,7 @@ export default class Objects
         // this.setParsers()
         // this.setMerge()
         this.setBox3()
-        this.setPlane()
+        // this.setPlane()
 
     }
 
@@ -65,7 +65,7 @@ export default class Objects
         this.model.quaternion.copy(this.physics.objects.body.quaternion)
 
         // Update plane model
-        this.planemodel.position.copy(this.physics.plane.body.position)
-        this.planemodel.quaternion.copy(this.physics.plane.body.quaternion)
+        // this.planemodel.position.copy(this.physics.plane.body.position)
+        // this.planemodel.quaternion.copy(this.physics.plane.body.quaternion)
     }
 }
