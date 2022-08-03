@@ -79,7 +79,7 @@ export default class Environment
 
     setEnvironmentMap()
     {
-        this.scene.background = new THREE.Color(0xb9c42f)
+        this.scene.background = new THREE.Color(0xa0d8ef)
 
         // this.environmentMap = {}
         // this.environmentMap.intensity = 0.4
