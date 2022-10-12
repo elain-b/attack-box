@@ -1,5 +1,7 @@
 # Three.js Journey
 
+![Test Image 1](/static/textures/nature/bearinsidenature.png)
+
 ## Setup
 Download [Node.js](https://nodejs.org/en/download/).
 Run this followed commands:
